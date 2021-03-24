@@ -17,7 +17,8 @@ bool state::is_sink() const { return __sink; }
 bool state::is_current() const { return __current; }
 
 void state::set_id(int number, char element) {
-  __id = {number, element};
+  __id.first = number;
+  __id.second = element;
 }
 
 void state::set_initial() {
@@ -42,8 +43,11 @@ void state::set_current() {
  * @param noStates
  *            Number of states in the DFA.
  */
-AbstractDFA::AbstractDFA(int noStates) {
+AbstractDFA::AbstractDFA(int noStates) : states(noStates), step(0) {
   // TODO: initialize data structures
+  states[0].set_initial();
+  states[noStates - 2].set_final();
+  states[noStates - 1].set_sink();
 }
 
 /**
@@ -51,6 +55,7 @@ AbstractDFA::AbstractDFA(int noStates) {
  */
 void AbstractDFA::reset() {
   // TODO: reset automaton to initial state
+  step = 0;
 }
 
 /**
@@ -63,8 +68,11 @@ void AbstractDFA::reset() {
  *            The current input.
  */
 void AbstractDFA::doStep(char letter) {
-  // TODO: do step by going to the next state according to the current
-  // state and the read letter.
+  // TODO: do step by going to the next state according to the current state and the read letter.
+  if (step < states.size()) {
+    states[step].set_id(step, letter);
+    step++;
+  }
 }
 
 /**
@@ -74,7 +82,7 @@ void AbstractDFA::doStep(char letter) {
  */
 bool AbstractDFA::isAccepting() {
   // TODO: return if the current state is accepting
-  return false;
+  return states[step].is_final();
 }
 
 /**
@@ -101,8 +109,11 @@ bool AbstractDFA::run(const string &inputWord) {
  * @param word
  *            A String that the automaton should recognize
  */
-WordDFA::WordDFA(const string &word) : AbstractDFA(0) {
+WordDFA::WordDFA(const string &word) : AbstractDFA(word.size() + 2) {
   // TODO: fill in correct number of states
+  for (string::const_iterator it = word.begin(); it != word.end(); it++) {
+    doStep(*it);
+  }
 
   // TODO: build DFA recognizing the given word
 }

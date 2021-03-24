@@ -17,7 +17,7 @@ class state {
   bool __current;
 
  public:
-  state(tpair, bool, bool, bool, bool);
+  state(tpair = tpair(), bool = false, bool = false, bool = false, bool = false);
 
   tpair get_id() const;
   bool is_initial() const;
@@ -41,6 +41,9 @@ class AbstractDFA {
   // - transitions of the form (state, input) -> state
   // - current state
  private:
+  vector<state> states;
+  unsigned int step;
+
  public:
   /**
 	 * Constructor for Abstract DFA.
