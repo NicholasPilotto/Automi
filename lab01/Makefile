@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=
+CXXFLAGS=-std=c++17
 LDFLAGS=
 DEPS=automata.h
 OBJS=main.o automata.o
@@ -10,7 +10,7 @@ main: $(OBJS) $(DEPS)
 	$(CXX) -o main $(OBJS) $(LDFLAGS)
 
 %.o: %.cpp $(DEPS)
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 	
 clean:
 	rm -f $(OBJS) main
