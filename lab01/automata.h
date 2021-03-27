@@ -8,29 +8,6 @@ using namespace std;
 
 typedef std::pair<int, char> tpair;
 
-class state {
- private:
-  tpair __id;
-  bool __initial;
-  bool __final;
-  bool __sink;
-  bool __current;
-
- public:
-  state(tpair = tpair(), bool = false, bool = false, bool = false, bool = false);
-
-  tpair get_id() const;
-  bool is_initial() const;
-  bool is_final() const;
-  bool is_sink() const;
-  bool is_current() const;
-  void set_id(int, char);
-  void set_initial();
-  void set_final();
-  void set_sink();
-  void set_current();
-};
-
 /**
  * Abstract class for Deterministic Finite Automata.
  */
@@ -40,9 +17,12 @@ class AbstractDFA {
   // - final states (and sink states)
   // - transitions of the form (state, input) -> state
   // - current state
- private:
-  vector<state> states;
-  unsigned int step;
+ protected:
+  map<tpair, int> transitions;
+  int current;
+  bool sink;
+  bool finale;
+  int states;
 
  public:
   /**
@@ -97,8 +77,7 @@ class WordDFA : public AbstractDFA {
 	 * from every state (including the final one) every other input letter leads
 	 * to a distinguished sink state in which the automaton then remains
 	 * 
-	 * @param word
-	 *            A String that the automaton should recognize
+	 * @param word A String that the automaton should recognize
 	 */
   WordDFA(const string &word);
 };
@@ -121,8 +100,7 @@ class CommentDFA : public AbstractDFA {
 	 * Performs one step of the DFA for a given letter. This method works
 	 * differently than in the superclass AbstractDFA.
 	 * 
-	 * @param letter
-	 *            The current input.
+	 * @param letter The current input.
 	 */
   virtual void doStep(char letter);
 };

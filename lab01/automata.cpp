@@ -4,50 +4,13 @@
 
 using namespace std;
 
-state::state(tpair id, bool initial, bool final, bool sink, bool current) : __id(id), __initial(initial), __final(final), __sink(sink), __current(current) {}
-
-tpair state::get_id() const { return __id; }
-
-bool state::is_initial() const { return __initial; }
-
-bool state::is_final() const { return __final; }
-
-bool state::is_sink() const { return __sink; }
-
-bool state::is_current() const { return __current; }
-
-void state::set_id(int number, char element) {
-  __id.first = number;
-  __id.second = element;
-}
-
-void state::set_initial() {
-  __initial = !__initial;
-}
-
-void state::set_final() {
-  __final = !__final;
-}
-
-void state::set_sink() {
-  __sink = !__sink;
-}
-
-void state::set_current() {
-  __current = !__current;
-}
-
 /**
  * Constructor for Abstract DFA.
  * 
- * @param noStates
- *            Number of states in the DFA.
+ * @param noStates Number of states in the DFA.
  */
-AbstractDFA::AbstractDFA(int noStates) : states(noStates), step(0) {
+AbstractDFA::AbstractDFA(int noStates) : states(noStates), sink(false), finale(false), current(1) {
   // TODO: initialize data structures
-  states[0].set_initial();
-  states[noStates - 2].set_final();
-  states[noStates - 1].set_sink();
 }
 
 /**
@@ -55,7 +18,6 @@ AbstractDFA::AbstractDFA(int noStates) : states(noStates), step(0) {
  */
 void AbstractDFA::reset() {
   // TODO: reset automaton to initial state
-  step = 0;
 }
 
 /**
@@ -64,14 +26,21 @@ void AbstractDFA::reset() {
  * Otherwise it goes to the sink state. By construction it will stay in the
  * sink for every input letter.
  * 
- * @param letter
- *            The current input.
+ * @param letter The current input.
  */
 void AbstractDFA::doStep(char letter) {
   // TODO: do step by going to the next state according to the current state and the read letter.
-  if (step < states.size()) {
-    states[step].set_id(step, letter);
-    step++;
+
+  //! TODO: fare debug!!!!!!!!!!!!!!!!!!
+  map<tpair, int>::iterator a = transitions.find(tpair(letter, current));
+  if (a != transitions.end()) {
+    current = (*a).second;
+    if (current - 1 == states) {
+      finale = true;
+    }
+  } else {
+    current = -1;
+    sink = true;
   }
 }
 
@@ -82,17 +51,16 @@ void AbstractDFA::doStep(char letter) {
  */
 bool AbstractDFA::isAccepting() {
   // TODO: return if the current state is accepting
-  return states[step].is_final();
+  return finale;
 }
 
 /**
  * Run the DFA on the input.
  * 
- * @param inputWord
- *            stream that contains the input word
+ * @param inputWord stream that contains the input word
  * @return True, if if the word is accepted by this automaton
  */
-bool AbstractDFA::run(const string &inputWord) {
+bool AbstractDFA::run(const string& inputWord) {
   this->reset();
   for (int i = 0; i < inputWord.length(); i++) {
     doStep(inputWord[i]);
@@ -106,13 +74,14 @@ bool AbstractDFA::run(const string &inputWord) {
  * from every state (including the final one) every other input letter leads
  * to a distinguished sink state in which the automaton then remains
  * 
- * @param word
- *            A String that the automaton should recognize
+ * @param word A String that the automaton should recognize
  */
-WordDFA::WordDFA(const string &word) : AbstractDFA(word.size() + 2) {
+WordDFA::WordDFA(const string& word) : AbstractDFA(word.size() + 2) {
   // TODO: fill in correct number of states
-  for (string::const_iterator it = word.begin(); it != word.end(); it++) {
-    doStep(*it);
+  int i = 1;
+  for (string::const_iterator it = word.cbegin(); it != word.cend(); it++) {
+    transitions[tpair(*it, (i - 1))] = i;
+    i++;
   }
 
   // TODO: build DFA recognizing the given word
