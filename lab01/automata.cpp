@@ -7,9 +7,9 @@ using namespace std;
 /**
  * Constructor for Abstract DFA.
  * 
- * @param noStates Number of states in the DFA.
+ * @param noStates Number of _states in the DFA.
  */
-AbstractDFA::AbstractDFA(int noStates) : states(noStates), sink(false), finale(false), current(0) {
+AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __is_accepting(false), __current(0) {
   // TODO: initialize data structures
 }
 
@@ -18,9 +18,9 @@ AbstractDFA::AbstractDFA(int noStates) : states(noStates), sink(false), finale(f
  */
 void AbstractDFA::reset() {
   // TODO: reset automaton to initial state
-  current = 0;
-  finale = false;
-  sink = false;
+  __current = 0;
+  __is_accepting = false;
+  __sink = false;
 }
 
 /**
@@ -33,17 +33,17 @@ void AbstractDFA::reset() {
  */
 void AbstractDFA::doStep(char letter) {
   // TODO: do step by going to the next state according to the current state and the read letter.
-  if (current != -1) {
-    map<tpair, int>::iterator a = transitions.find(tpair(letter, current));
+  if (__current != -1) {
+    map<tpair, int>::iterator a = transitions.find(tpair(letter, __current));
     if (a != transitions.end()) {
-      current = (*a).second;
-      if (current == states - 2) {
-        finale = true;
+      __current = (*a).second;
+      if (__current == __states - 2) {
+        __is_accepting = true;
       }
     } else {
-      current = -1;
-      sink = true;
-      finale = false;
+      __current = -1;
+      __sink = true;
+      __is_accepting = false;
     }
   }
 }
@@ -55,7 +55,7 @@ void AbstractDFA::doStep(char letter) {
  */
 bool AbstractDFA::isAccepting() {
   // TODO: return if the current state is accepting
-  return finale;
+  return __is_accepting;
 }
 
 /**
@@ -86,7 +86,7 @@ WordDFA::WordDFA(const string& word) : AbstractDFA(word.size() + 2) {
 
   int i = 1;
   string::const_iterator it = word.cbegin();
-  string::const_iterator cend = word.end();
+  string::const_iterator cend = word.cend();
   for (; it != cend; it++) {
     transitions[tpair(*it, (i - 1))] = i;
     i++;

@@ -19,10 +19,10 @@ class AbstractDFA {
   // - current state
  protected:
   map<tpair, int> transitions;
-  int current;
-  bool sink;
-  bool finale;
-  int states;
+  int __current;
+  bool __sink;
+  bool __is_accepting;
+  int __states;
 
  public:
   /**
