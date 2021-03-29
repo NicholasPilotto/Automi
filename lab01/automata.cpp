@@ -9,7 +9,7 @@ using namespace std;
  * 
  * @param noStates Number of states in the DFA.
  */
-AbstractDFA::AbstractDFA(int noStates) : states(noStates), sink(false), finale(false), current(1) {
+AbstractDFA::AbstractDFA(int noStates) : states(noStates), sink(false), finale(false), current(0) {
   // TODO: initialize data structures
 }
 
@@ -18,6 +18,9 @@ AbstractDFA::AbstractDFA(int noStates) : states(noStates), sink(false), finale(f
  */
 void AbstractDFA::reset() {
   // TODO: reset automaton to initial state
+  current = 0;
+  finale = false;
+  sink = false;
 }
 
 /**
@@ -30,17 +33,18 @@ void AbstractDFA::reset() {
  */
 void AbstractDFA::doStep(char letter) {
   // TODO: do step by going to the next state according to the current state and the read letter.
-
-  //! TODO: fare debug!!!!!!!!!!!!!!!!!!
-  map<tpair, int>::iterator a = transitions.find(tpair(letter, current));
-  if (a != transitions.end()) {
-    current = (*a).second;
-    if (current - 1 == states) {
-      finale = true;
+  if (current != -1) {
+    map<tpair, int>::iterator a = transitions.find(tpair(letter, current));
+    if (a != transitions.end()) {
+      current = (*a).second;
+      if (current == states - 2) {
+        finale = true;
+      }
+    } else {
+      current = -1;
+      sink = true;
+      finale = false;
     }
-  } else {
-    current = -1;
-    sink = true;
   }
 }
 
@@ -78,13 +82,15 @@ bool AbstractDFA::run(const string& inputWord) {
  */
 WordDFA::WordDFA(const string& word) : AbstractDFA(word.size() + 2) {
   // TODO: fill in correct number of states
+  // TODO: build DFA recognizing the given word
+
   int i = 1;
-  for (string::const_iterator it = word.cbegin(); it != word.cend(); it++) {
+  string::const_iterator it = word.cbegin();
+  string::const_iterator cend = word.end();
+  for (; it != cend; it++) {
     transitions[tpair(*it, (i - 1))] = i;
     i++;
   }
-
-  // TODO: build DFA recognizing the given word
 }
 
 /**
