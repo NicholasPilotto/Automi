@@ -21,8 +21,9 @@ class AbstractDFA {
   map<tpair, int> transitions;
   int __current;
   bool __sink;
-  bool __is_accepting;
+  bool __accepting;
   int __states;
+  map<int, bool> final_states;
 
  public:
   /**
@@ -86,6 +87,10 @@ class WordDFA : public AbstractDFA {
  * DFA recognizing comments.
  */
 class CommentDFA : public AbstractDFA {
+ private:
+  int aux;
+  bool flag;
+
  public:
   /**
 	 * Construct a new DFA that recognizes comments within source code. There

@@ -4,12 +4,14 @@
 
 using namespace std;
 
+// map<int, bool> AbstractDFA::final_states = map<int, bool>();
+
 /**
  * Constructor for Abstract DFA.
  * 
  * @param noStates Number of _states in the DFA.
  */
-AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __is_accepting(false), __current(0) {
+AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __accepting(false), __current(0) {
   // TODO: initialize data structures
 }
 
@@ -19,7 +21,7 @@ AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __is
 void AbstractDFA::reset() {
   // TODO: reset automaton to initial state
   __current = 0;
-  __is_accepting = false;
+  __accepting = false;
   __sink = false;
 }
 
@@ -38,12 +40,13 @@ void AbstractDFA::doStep(char letter) {
     if (a != transitions.end()) {
       __current = (*a).second;
       if (__current == __states - 2) {
-        __is_accepting = true;
+        __accepting = true;
+        final_states[__current] = true;
       }
     } else {
       __current = -1;
       __sink = true;
-      __is_accepting = false;
+      __accepting = false;
     }
   }
 }
@@ -55,7 +58,7 @@ void AbstractDFA::doStep(char letter) {
  */
 bool AbstractDFA::isAccepting() {
   // TODO: return if the current state is accepting
-  return __is_accepting;
+  return final_states.find(__current) != final_states.end();
 }
 
 /**
@@ -99,9 +102,23 @@ WordDFA::WordDFA(const string& word) : AbstractDFA(word.size() + 2) {
  * with a newline, multiline comments that starts with (* and ends with *), and
  * multiline comments that starts with { and ends with }
  */
-CommentDFA::CommentDFA() : AbstractDFA(0) {
+CommentDFA::CommentDFA() : AbstractDFA(0), aux(0), flag(false) {
   // TODO: fill in correct number of states
   // TODO: build DFA recognizing comments
+
+  final_states[3] = true;
+  final_states[7] = true;
+  final_states[9] = true;
+
+  transitions[tpair('/', 0)] = 1;
+  transitions[tpair('(', 0)] = 4;
+  transitions[tpair('{', 0)] = 8;
+  transitions[tpair('/', 1)] = 2;
+  transitions[tpair('\n', 2)] = 3;
+  transitions[tpair('*', 4)] = 5;
+  transitions[tpair('*', 5)] = 6;
+  transitions[tpair(')', 6)] = 7;
+  transitions[tpair('}', 8)] = 9;
 }
 
 /**
@@ -113,4 +130,29 @@ CommentDFA::CommentDFA() : AbstractDFA(0) {
  */
 void CommentDFA::doStep(char letter) {
   // TODO: implement accordingly
+  if (__sink) {
+    __current = -1;
+  }
+  map<tpair, int>::iterator a = transitions.find(tpair(letter, __current));
+
+  if (a != transitions.end()) {
+    __current = transitions[tpair(letter, __current)];
+  } else {
+    switch (__current) {
+      case 1:
+      case 4:
+        __current = 0;
+        break;
+      case 6:
+        __current = 5;
+        break;
+      case 3:
+      case 7:
+      case 9:
+        __sink = true;
+        break;
+      default:
+        break;
+    }
+  }
 }
