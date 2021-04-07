@@ -4,15 +4,15 @@
 
 using namespace std;
 
-// map<int, bool> AbstractDFA::final_states = map<int, bool>();
-
 /**
  * Constructor for Abstract DFA.
  * 
  * @param noStates Number of _states in the DFA.
  */
-AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __accepting(false), __current(0) {
+AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __current(0) {
   // TODO: initialize data structures
+  transitions = map<tpair, int>();
+  final_states = map<int, bool>();
 }
 
 /**
@@ -21,7 +21,6 @@ AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __ac
 void AbstractDFA::reset() {
   // TODO: reset automaton to initial state
   __current = 0;
-  __accepting = false;
   __sink = false;
 }
 
@@ -40,13 +39,11 @@ void AbstractDFA::doStep(char letter) {
     if (a != transitions.end()) {
       __current = (*a).second;
       if (__current == __states - 2) {
-        __accepting = true;
         final_states[__current] = true;
       }
     } else {
       __current = -1;
       __sink = true;
-      __accepting = false;
     }
   }
 }
@@ -102,7 +99,7 @@ WordDFA::WordDFA(const string& word) : AbstractDFA(word.size() + 2) {
  * with a newline, multiline comments that starts with (* and ends with *), and
  * multiline comments that starts with { and ends with }
  */
-CommentDFA::CommentDFA() : AbstractDFA(0), aux(0), flag(false) {
+CommentDFA::CommentDFA() : AbstractDFA(0) {
   // TODO: fill in correct number of states
   // TODO: build DFA recognizing comments
 
@@ -130,29 +127,22 @@ CommentDFA::CommentDFA() : AbstractDFA(0), aux(0), flag(false) {
  */
 void CommentDFA::doStep(char letter) {
   // TODO: implement accordingly
-  if (__sink) {
-    __current = -1;
-  }
-  map<tpair, int>::iterator a = transitions.find(tpair(letter, __current));
-
-  if (a != transitions.end()) {
-    __current = transitions[tpair(letter, __current)];
-  } else {
-    switch (__current) {
-      case 1:
-      case 4:
-        __current = 0;
-        break;
-      case 6:
-        __current = 5;
-        break;
-      case 3:
-      case 7:
-      case 9:
-        __sink = true;
-        break;
-      default:
-        break;
+  if (__current != -1) {
+    if (__sink) {
+      __current = -1;
+    } else {
+      map<tpair, int>::iterator a = transitions.find(tpair(letter, __current));
+      if (a != transitions.end()) {
+        __current = (*a).second;
+      } else {
+        if (__current == 1 || __current == 4) {
+          __current = 0;
+        } else if (__current == 6) {
+          __current = 5;
+        } else if (__current == 0 || __current == 3 || __current == 7 || __current == 9) {
+          __sink = true;
+        }
+      }
     }
   }
 }
