@@ -41,11 +41,26 @@ public:
   virtual void enterOut(pascalParser::OutContext *ctx) = 0;
   virtual void exitOut(pascalParser::OutContext *ctx) = 0;
 
-  virtual void enterBranch(pascalParser::BranchContext *ctx) = 0;
-  virtual void exitBranch(pascalParser::BranchContext *ctx) = 0;
+  virtual void enterPrint(pascalParser::PrintContext *ctx) = 0;
+  virtual void exitPrint(pascalParser::PrintContext *ctx) = 0;
+
+  virtual void enterIn(pascalParser::InContext *ctx) = 0;
+  virtual void exitIn(pascalParser::InContext *ctx) = 0;
+
+  virtual void enterRead(pascalParser::ReadContext *ctx) = 0;
+  virtual void exitRead(pascalParser::ReadContext *ctx) = 0;
 
   virtual void enterExpr(pascalParser::ExprContext *ctx) = 0;
   virtual void exitExpr(pascalParser::ExprContext *ctx) = 0;
+
+  virtual void enterBranch(pascalParser::BranchContext *ctx) = 0;
+  virtual void exitBranch(pascalParser::BranchContext *ctx) = 0;
+
+  virtual void enterRepeat(pascalParser::RepeatContext *ctx) = 0;
+  virtual void exitRepeat(pascalParser::RepeatContext *ctx) = 0;
+
+  virtual void enterGuard(pascalParser::GuardContext *ctx) = 0;
+  virtual void exitGuard(pascalParser::GuardContext *ctx) = 0;
 
   virtual void enterRelation(pascalParser::RelationContext *ctx) = 0;
   virtual void exitRelation(pascalParser::RelationContext *ctx) = 0;

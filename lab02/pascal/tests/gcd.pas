@@ -7,7 +7,7 @@ begin
    writeln('Please give me two numbers');
    readln(x);
    readln(y);
-   repeat 
+   repeat
        if x < y then
             y := y - x
        else if y < x then
