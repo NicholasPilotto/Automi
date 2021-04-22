@@ -1,4 +1,4 @@
- #include "automata.h"
+#include "automata.h"
 
 #include <iostream>
 
@@ -9,8 +9,7 @@ using namespace std;
  *
  * @param noStates Number of _states in the DFA.
  */
-AbstractDFA::AbstractDFA(int noStates)
-    : __states(noStates), __sink(false), __current(0) {
+AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __current(0) {
   // TODO: initialize data structures
   transitions = map<tpair, int>();
   final_states = map<int, bool>();
@@ -142,8 +141,7 @@ void CommentDFA::doStep(char letter) {
           __current = 0;
         } else if (__current == 6) {
           __current = 5;
-        } else if (__current == 0 || __current == 3 || __current == 7 ||
-                   __current == 9) {
+        } else if (__current == 0 || __current == 3 || __current == 7 || __current == 9) {
           __sink = true;
         }
       }
