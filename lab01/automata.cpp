@@ -137,7 +137,8 @@ void CommentDFA::doStep(char letter) {
       if (a != transitions.end()) {
         __current = (*a).second;
       } else {
-        if (__current == 1 || __current == 4) {
+        if (__current == 1 || __current == 4)
+ {
           __current = 0;
         } else if (__current == 6) {
           __current = 5;
