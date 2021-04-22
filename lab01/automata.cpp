@@ -1,4 +1,4 @@
-#include "automata.h"
+ #include "automata.h"
 
 #include <iostream>
 
