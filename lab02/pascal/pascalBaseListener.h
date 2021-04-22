@@ -40,6 +40,9 @@ public:
   virtual void enterAssign(pascalParser::AssignContext * /*ctx*/) override { }
   virtual void exitAssign(pascalParser::AssignContext * /*ctx*/) override { }
 
+  virtual void enterOperation(pascalParser::OperationContext * /*ctx*/) override { }
+  virtual void exitOperation(pascalParser::OperationContext * /*ctx*/) override { }
+
   virtual void enterOut(pascalParser::OutContext * /*ctx*/) override { }
   virtual void exitOut(pascalParser::OutContext * /*ctx*/) override { }
 
@@ -57,6 +60,12 @@ public:
 
   virtual void enterBranch(pascalParser::BranchContext * /*ctx*/) override { }
   virtual void exitBranch(pascalParser::BranchContext * /*ctx*/) override { }
+
+  virtual void enterIf_st(pascalParser::If_stContext * /*ctx*/) override { }
+  virtual void exitIf_st(pascalParser::If_stContext * /*ctx*/) override { }
+
+  virtual void enterElse_st(pascalParser::Else_stContext * /*ctx*/) override { }
+  virtual void exitElse_st(pascalParser::Else_stContext * /*ctx*/) override { }
 
   virtual void enterRepeat(pascalParser::RepeatContext * /*ctx*/) override { }
   virtual void exitRepeat(pascalParser::RepeatContext * /*ctx*/) override { }

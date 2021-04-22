@@ -9,7 +9,7 @@ begin
    readln(y);
    repeat
        if x < y then
-            y := y - x
+            y := y - x;
        else if y < x then
             x := x - y;
    until x < y or x > y;
