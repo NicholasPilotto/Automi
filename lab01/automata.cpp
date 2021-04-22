@@ -1,8 +1,8 @@
- #include "automata.h"
+#include "automata.h"
 
 #include <iostream>
 
- using namespace std;
+using namespace std;
 
 /**
  * Constructor for Abstract DFA.
@@ -18,8 +18,7 @@ AbstractDFA::AbstractDFA(int noStates) : __states(noStates), __sink(false), __cu
 /**
  * Reset the automaton to the initial state.
  */
-void AbstractDFA::reset()
- {
+void AbstractDFA::reset() {
   // TODO: reset automaton to initial state
   __current = 0;
   __sink = false;

@@ -20,8 +20,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   // read file into a string
-  string inputProgram((istreambuf_iterator<char>(inputFile)),
-                      (istreambuf_iterator<char>()));
+  string inputProgram((istreambuf_iterator<char>(inputFile)), (istreambuf_iterator<char>()));
   cout << "Input: " << inputProgram << endl;
   // close input file
   inputFile.close();
