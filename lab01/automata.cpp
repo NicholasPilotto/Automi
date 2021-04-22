@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-using namespace std;
+ using namespace std;
 
 /**
  * Constructor for Abstract DFA.
