@@ -15,5 +15,7 @@ jobs:
     - name: Run clang-format
       uses: NicholasPilotto/action-clang-format@1.4
       with:
+        scandir: '.'
+        excludedirs: 'build'
         extensions: 'c, h, C, H, cpp, hpp, cc, hh, c++, h++, cxx, hxx'
         style: 'file'
