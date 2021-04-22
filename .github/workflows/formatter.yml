@@ -16,3 +16,4 @@ jobs:
       uses: NicholasPilotto/action-clang-format@1.4
       with:
         extensions: 'c, h, C, H, cpp, hpp, cc, hh, c++, h++, cxx, hxx'
+        style: 'file'
