@@ -14,11 +14,11 @@ public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    T__14 = 15, T__15 = 16, OPERATIONS = 17, ADD = 18, SUB = 19, MUL = 20, 
-    DIV = 21, MOD = 22, WRITE = 23, READ = 24, BOOLEAN_OPERATORS = 25, EQ = 26, 
-    LT = 27, LEQ = 28, GT = 29, GEQ = 30, NEQ = 31, ID = 32, NUMBER = 33, 
-    OPEN_BRACKET = 34, CLOSE_BRACKET = 35, R_COMMENT = 36, C_COMMENT = 37, 
-    LINE_COMMENT = 38, WS = 39, ErrorChar = 40
+    T__14 = 15, T__15 = 16, T__16 = 17, ADD = 18, SUB = 19, MUL = 20, DIV = 21, 
+    MOD = 22, String = 23, BOOLEAN_OPERATORS = 24, EQ = 25, LT = 26, LEQ = 27, 
+    GT = 28, GEQ = 29, NEQ = 30, ID = 31, NUMBER = 32, OPEN_BRACKET = 33, 
+    CLOSE_BRACKET = 34, R_COMMENT = 35, C_COMMENT = 36, LINE_COMMENT = 37, 
+    WS = 38, ErrorChar = 39
   };
 
   explicit pascalLexer(antlr4::CharStream *input);

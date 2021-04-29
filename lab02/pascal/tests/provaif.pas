@@ -1,12 +1,20 @@
 program provaif;
 var
-  a, b, c, d: integer;
+  x, y: integer;
 begin
-  repeat
-    writeln(a);
-  until a < b not b > a;
-  // if x < y then
-  //   y := y - x;
-  // else if y < x then
-  //   x := x - y;
+  x := 0;
+  y := 1;
+  readln (y);
+  if ((x + y) * 2) = 8 then
+    begin
+       y := y - x;
+       y := y + x;
+       writeln(y);
+     end
+   else if (y < x) then
+     begin
+        x := x;
+        x := x + y;
+        writeln(y);
+     end;
 end.

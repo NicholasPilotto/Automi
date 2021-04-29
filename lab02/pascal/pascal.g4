@@ -14,11 +14,18 @@ st_list: statement ';' | statement ';' st_list;
 statement: assign | branch | out | in | repeat | operation;
 
 // regola per la definizione di una assegnazione
-assign: ID ':=' expr;
+assign: ID ':=' (expr | in);
 
 // regole per la definizione di operazioni algebriche
-operation: ID ':=' expr OPERATIONS expr;
-OPERATIONS: ADD | SUB | MUL | DIV | MOD;
+operation: ID ':=' operations;
+operations:
+	expr
+	| operations ADD operations
+	| operations SUB operations
+	| operations MUL operations
+	| operations DIV operations
+	| operations MOD operations
+	| '(' operations ')';
 ADD: '+';
 SUB: '-';
 MUL: '*';
@@ -27,15 +34,11 @@ MOD: '%';
 
 // regole per la definizione di un operatore di scrittura in output di una stringa oppure una
 // variabile
-out: print | print out;
-print: WRITE OPEN_BRACKET | '\'' | expr | '\'' | CLOSE_BRACKET;
-WRITE: 'writeln';
-
+out: 'writeln' '(' (String | expr) ')';
+String: '\'' ~[\r\n]* '\'';
 // regole per la definizione di un operatore di lettura in input e la scrittura di tale valore in
 // una variabile
-in: read | read in;
-read: READ OPEN_BRACKET | ID | CLOSE_BRACKET;
-READ: 'readln';
+in: 'readln' '(' ID ')';
 
 // regola per la definizione di un espressione, la quale è formata da lettere (minuscole o
 // maiuscole) oppure numeri
@@ -43,7 +46,7 @@ expr: NUMBER | ID;
 
 // regole per la definizione di un if-statement oppure if-else-statement
 branch: if_st | if_st else_st;
-if_st: 'if' relation 'then' code_block;
+if_st: 'if' guard 'then' code_block;
 else_st: 'else' code_block;
 
 // regole per la definizione di un repeat-until-statement
@@ -55,12 +58,13 @@ BOOLEAN_OPERATORS: ('or' | 'and' | 'not');
 
 // regole per la definizione di un confronto
 relation:
-	expr LT expr
-	| expr LEQ expr
-	| expr EQ expr
-	| expr NEQ expr
-	| expr GEQ expr
-	| expr GT expr;
+	operations LT operations
+	| operations LEQ operations
+	| operations EQ operations
+	| operations NEQ operations
+	| operations GEQ operations
+	| operations GT operations
+	| OPEN_BRACKET relation CLOSE_BRACKET;
 
 // regole per la definzione di operatori di confronto
 EQ: '=';

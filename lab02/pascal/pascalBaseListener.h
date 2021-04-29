@@ -43,17 +43,14 @@ public:
   virtual void enterOperation(pascalParser::OperationContext * /*ctx*/) override { }
   virtual void exitOperation(pascalParser::OperationContext * /*ctx*/) override { }
 
+  virtual void enterOperations(pascalParser::OperationsContext * /*ctx*/) override { }
+  virtual void exitOperations(pascalParser::OperationsContext * /*ctx*/) override { }
+
   virtual void enterOut(pascalParser::OutContext * /*ctx*/) override { }
   virtual void exitOut(pascalParser::OutContext * /*ctx*/) override { }
 
-  virtual void enterPrint(pascalParser::PrintContext * /*ctx*/) override { }
-  virtual void exitPrint(pascalParser::PrintContext * /*ctx*/) override { }
-
   virtual void enterIn(pascalParser::InContext * /*ctx*/) override { }
   virtual void exitIn(pascalParser::InContext * /*ctx*/) override { }
-
-  virtual void enterRead(pascalParser::ReadContext * /*ctx*/) override { }
-  virtual void exitRead(pascalParser::ReadContext * /*ctx*/) override { }
 
   virtual void enterExpr(pascalParser::ExprContext * /*ctx*/) override { }
   virtual void exitExpr(pascalParser::ExprContext * /*ctx*/) override { }

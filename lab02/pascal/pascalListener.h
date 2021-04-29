@@ -41,17 +41,14 @@ public:
   virtual void enterOperation(pascalParser::OperationContext *ctx) = 0;
   virtual void exitOperation(pascalParser::OperationContext *ctx) = 0;
 
+  virtual void enterOperations(pascalParser::OperationsContext *ctx) = 0;
+  virtual void exitOperations(pascalParser::OperationsContext *ctx) = 0;
+
   virtual void enterOut(pascalParser::OutContext *ctx) = 0;
   virtual void exitOut(pascalParser::OutContext *ctx) = 0;
 
-  virtual void enterPrint(pascalParser::PrintContext *ctx) = 0;
-  virtual void exitPrint(pascalParser::PrintContext *ctx) = 0;
-
   virtual void enterIn(pascalParser::InContext *ctx) = 0;
   virtual void exitIn(pascalParser::InContext *ctx) = 0;
-
-  virtual void enterRead(pascalParser::ReadContext *ctx) = 0;
-  virtual void exitRead(pascalParser::ReadContext *ctx) = 0;
 
   virtual void enterExpr(pascalParser::ExprContext *ctx) = 0;
   virtual void exitExpr(pascalParser::ExprContext *ctx) = 0;
