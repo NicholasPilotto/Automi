@@ -14,18 +14,19 @@ public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
-    T__14 = 15, T__15 = 16, T__16 = 17, ADD = 18, SUB = 19, MUL = 20, DIV = 21, 
-    MOD = 22, String = 23, BOOLEAN_OPERATORS = 24, EQ = 25, LT = 26, LEQ = 27, 
-    GT = 28, GEQ = 29, NEQ = 30, ID = 31, NUMBER = 32, OPEN_BRACKET = 33, 
-    CLOSE_BRACKET = 34, R_COMMENT = 35, C_COMMENT = 36, LINE_COMMENT = 37, 
-    WS = 38, ErrorChar = 39
+    T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
+    ADD = 21, SUB = 22, MUL = 23, DIV = 24, MOD = 25, String = 26, EQ = 27, 
+    LT = 28, LEQ = 29, GT = 30, GEQ = 31, NEQ = 32, ID = 33, NUMBER = 34, 
+    OPEN_BRACKET = 35, CLOSE_BRACKET = 36, R_COMMENT = 37, C_COMMENT = 38, 
+    LINE_COMMENT = 39, WS = 40, ErrorChar = 41
   };
 
   enum {
     RuleStart = 0, RuleDecl_list = 1, RuleDecl = 2, RuleMain_code = 3, RuleCode_block = 4, 
     RuleSt_list = 5, RuleStatement = 6, RuleAssign = 7, RuleOperation = 8, 
     RuleOperations = 9, RuleOut = 10, RuleIn = 11, RuleExpr = 12, RuleBranch = 13, 
-    RuleIf_st = 14, RuleElse_st = 15, RuleRepeat = 16, RuleGuard = 17, RuleRelation = 18
+    RuleIf_st = 14, RuleElse_st = 15, RuleRepeat = 16, RuleGuard = 17, RuleBoolean_operators = 18, 
+    RuleRelation = 19
   };
 
   explicit pascalParser(antlr4::TokenStream *input);
@@ -56,6 +57,7 @@ public:
   class Else_stContext;
   class RepeatContext;
   class GuardContext;
+  class Boolean_operatorsContext;
   class RelationContext; 
 
   class  StartContext : public antlr4::ParserRuleContext {
@@ -317,7 +319,11 @@ public:
     virtual size_t getRuleIndex() const override;
     std::vector<RelationContext *> relation();
     RelationContext* relation(size_t i);
-    antlr4::tree::TerminalNode *BOOLEAN_OPERATORS();
+    Boolean_operatorsContext *boolean_operators();
+    ExprContext *expr();
+    antlr4::tree::TerminalNode *OPEN_BRACKET();
+    GuardContext *guard();
+    antlr4::tree::TerminalNode *CLOSE_BRACKET();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -325,6 +331,18 @@ public:
   };
 
   GuardContext* guard();
+
+  class  Boolean_operatorsContext : public antlr4::ParserRuleContext {
+  public:
+    Boolean_operatorsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+   
+  };
+
+  Boolean_operatorsContext* boolean_operators();
 
   class  RelationContext : public antlr4::ParserRuleContext {
   public:

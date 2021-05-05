@@ -68,6 +68,9 @@ public:
   virtual void enterGuard(pascalParser::GuardContext *ctx) = 0;
   virtual void exitGuard(pascalParser::GuardContext *ctx) = 0;
 
+  virtual void enterBoolean_operators(pascalParser::Boolean_operatorsContext *ctx) = 0;
+  virtual void exitBoolean_operators(pascalParser::Boolean_operatorsContext *ctx) = 0;
+
   virtual void enterRelation(pascalParser::RelationContext *ctx) = 0;
   virtual void exitRelation(pascalParser::RelationContext *ctx) = 0;
 

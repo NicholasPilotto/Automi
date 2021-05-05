@@ -51,10 +51,14 @@ else_st: 'else' code_block;
 
 // regole per la definizione di un repeat-until-statement
 repeat: 'repeat' st_list 'until' guard;
-guard: relation | relation BOOLEAN_OPERATORS relation;
+guard:
+	relation
+	| relation boolean_operators relation
+	| 'not' (relation | expr)
+	| '(' guard ')';
 
 // regola per la definizione degli operatori booleani
-BOOLEAN_OPERATORS: ('or' | 'and' | 'not');
+boolean_operators: 'or' | 'and';
 
 // regole per la definizione di un confronto
 relation:
@@ -64,7 +68,7 @@ relation:
 	| operations NEQ operations
 	| operations GEQ operations
 	| operations GT operations
-	| OPEN_BRACKET relation CLOSE_BRACKET;
+	| '(' relation ')';
 
 // regole per la definzione di operatori di confronto
 EQ: '=';

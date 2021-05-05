@@ -70,6 +70,9 @@ public:
   virtual void enterGuard(pascalParser::GuardContext * /*ctx*/) override { }
   virtual void exitGuard(pascalParser::GuardContext * /*ctx*/) override { }
 
+  virtual void enterBoolean_operators(pascalParser::Boolean_operatorsContext * /*ctx*/) override { }
+  virtual void exitBoolean_operators(pascalParser::Boolean_operatorsContext * /*ctx*/) override { }
+
   virtual void enterRelation(pascalParser::RelationContext * /*ctx*/) override { }
   virtual void exitRelation(pascalParser::RelationContext * /*ctx*/) override { }
 
