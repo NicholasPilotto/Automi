@@ -18,7 +18,7 @@ begin
 		    x := x - 1;
 		end;
 	    s := s + 1;
-    until x <= 0;
+    until x >= 0;
     writeln('I stopped walking after:');
     writeln(s);
     writeln('steps');
